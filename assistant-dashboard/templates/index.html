@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h2 class="mb-4">Task List</h2>
+<a href="/task/new" class="btn btn-success mb-3">Add Task</a>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Created</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for task in tasks %}
+    <tr>
+      <td>{{ task.id }}</td>
+      <td>{{ task.title }}</td>
+      <td>{{ task.description }}</td>
+      <td>{{ task.status }}</td>
+      <td>{{ task.created_at }}</td>
+      <td>
+        {% if task.status != 'completed' %}
+        <a href="/task/{{ task.id }}/complete" class="btn btn-sm btn-primary">Complete</a>
+        {% endif %}
+        <a href="/task/{{ task.id }}/delete" class="btn btn-sm btn-danger">Delete</a>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" class="text-center">No tasks found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
