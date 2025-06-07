@@ -7,3 +7,5 @@ sqlalchemy>=2.0.0
 aiofiles>=23.0.0
 asyncio>=3.4.3
 rich>=13.0.0
+elevenlabs>=1.1.0
+openai-whisper>=202311

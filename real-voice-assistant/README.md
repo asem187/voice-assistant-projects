@@ -4,9 +4,9 @@ This is a WORKING voice assistant using ACTUAL APIs that EXIST. No fake APIs, no
 
 ## What This ACTUALLY Is
 
-- **Speech Recognition**: Uses Google's FREE speech recognition API (no key needed)
+- **Speech Recognition**: Uses OpenAI's Whisper for high quality STT
 - **AI Brain**: Uses OpenAI's REAL Chat API (gpt-3.5-turbo) with function calling
-- **Text-to-Speech**: Uses pyttsx3 (works offline, no API needed)
+- **Text-to-Speech**: Uses ElevenLabs API with fallback to pyttsx3
 - **Database**: SQLite (no setup needed, just works)
 - **Memory System**: REAL persistent memory storage
 - **Task Management**: REAL task creation and tracking
@@ -15,8 +15,9 @@ This is a WORKING voice assistant using ACTUAL APIs that EXIST. No fake APIs, no
 
 - Python 3.8+
 - OpenAI API key (get from https://platform.openai.com/api-keys)
-- Microphone
-- Speakers
+- ElevenLabs API key (for high quality speech, optional)
+- FFmpeg installed (required for Whisper)
+- Microphone and speakers
 
 ## Installation
 
@@ -84,8 +85,8 @@ python main.py
 
 ## Cost
 
-- **Speech Recognition**: FREE (Google)
-- **Text-to-Speech**: FREE (pyttsx3)
+- **Speech Recognition**: FREE (Whisper open-source)
+- **Text-to-Speech**: ElevenLabs pricing (paid, fallback to free pyttsx3)
 - **Database**: FREE (SQLite)
 - **AI**: ~$0.002 per conversation turn (OpenAI pricing)
 

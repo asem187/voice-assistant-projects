@@ -1,9 +1,11 @@
 # Voice Assistant Projects
 
-This repository contains two voice assistant implementations:
+This repository contains two voice assistant implementations plus a new web dashboard for task tracking:
 
 1. **`real-voice-assistant/`** - A fully functional voice assistant using real APIs
 2. **`realtime-voice-assistant/`** - A concept implementation for future OpenAI Realtime API
+3. **`assistant-dashboard/`** - Flask web dashboard with task tracker
+   (uses the same SQLite database as the voice assistant)
 
 ## 🚀 Quick Start - Working Voice Assistant
 
@@ -16,14 +18,24 @@ python setup.py
 python main.py
 ```
 
+## 🚀 Quick Start - Web Dashboard
+
+```bash
+cd assistant-dashboard/
+pip install -r requirements.txt
+python app.py  # uses the shared voice_assistant.db
+```
+
+The dashboard lets you add tasks, mark them as complete, and delete them using a simple Bootstrap interface.
+
 ## 📂 Project Comparison
 
 | Feature | real-voice-assistant | realtime-voice-assistant |
 |---------|---------------------|-------------------------|
 | **Status** | ✅ Fully Working | ⚠️ Concept (Non-functional) |
-| **Speech Recognition** | Google Speech API (Free) | WebSocket-based (Fictional) |
+| **Speech Recognition** | OpenAI Whisper (Local) | WebSocket-based (Fictional) |
 | **AI Model** | OpenAI GPT-3.5-turbo (Real) | GPT-4o-realtime (Fictional) |
-| **Text-to-Speech** | pyttsx3 (Offline) | Real-time audio streaming |
+| **Text-to-Speech** | ElevenLabs API | Real-time audio streaming |
 | **Database** | SQLite (Simple) | PostgreSQL (Advanced) |
 | **Architecture** | Simple & Direct | Complex & Scalable |
 | **Dependencies** | 9 packages | 34+ packages |
@@ -32,10 +44,10 @@ python main.py
 ## 🎯 real-voice-assistant/
 
 ### What It Does
-- **Listens** to your voice using Google's free speech recognition
+- **Listens** to your voice using Whisper (local speech-to-text)
 - **Thinks** using OpenAI's real Chat API (gpt-3.5-turbo)
 - **Remembers** things you tell it in a SQLite database
-- **Speaks** back to you using offline text-to-speech
+- **Speaks** back to you using ElevenLabs text-to-speech
 - **Creates tasks** and tracks them persistently
 
 ### Features
@@ -103,8 +115,8 @@ pip install -r requirements.txt
 ## 💰 Cost Breakdown
 
 ### real-voice-assistant
-- **Speech Recognition**: FREE (Google)
-- **Text-to-Speech**: FREE (pyttsx3 offline)
+- **Speech Recognition**: FREE (Whisper open-source)
+- **Text-to-Speech**: ElevenLabs pricing (fallback to free pyttsx3)
 - **Database**: FREE (SQLite)
 - **AI Processing**: ~$0.002 per conversation (OpenAI API)
 
@@ -131,6 +143,10 @@ pip install -r requirements.txt
 ```
 voice-assistant-projects/
 ├── README.md                    # This file
+├── assistant-dashboard/     # Flask web GUI
+│   ├── app.py              # Web application
+│   ├── templates/          # HTML templates
+│   └── requirements.txt    # Web dependencies
 ├── real-voice-assistant/        # Working implementation
 │   ├── main.py                 # Main voice assistant
 │   ├── database.py             # SQLite operations
@@ -189,3 +205,7 @@ If you have issues with:
 - Want something that works **now**? → Use `real-voice-assistant/`
 - Want to see **future possibilities**? → Explore `realtime-voice-assistant/`
 - Want to **contribute**? → Both projects welcome improvements!
+
+## Code Style
+Run `black` to format Python files. Configured in `pyproject.toml`.
+

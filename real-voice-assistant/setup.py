@@ -35,7 +35,8 @@ def main():
     if not env_file.exists() and env_example.exists():
         shutil.copy(env_example, env_file)
         print("✓ Created .env file")
-        print("\n⚠️  IMPORTANT: Edit .env and add your OpenAI API key!")
+        print("\n⚠️  IMPORTANT: Edit .env and add your OpenAI API key")
+        print("   Optionally add your ElevenLabs API key for TTS")
     
     print("\n=== Setup Complete ===")
     print("\nTo run the assistant:")
