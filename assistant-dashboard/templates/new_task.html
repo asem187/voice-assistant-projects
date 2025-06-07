@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h2>Create Task</h2>
+<form method="post" action="/task/new">
+  <div class="mb-3">
+    <label class="form-label">Title</label>
+    <input type="text" name="title" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Description</label>
+    <textarea name="description" class="form-control"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Create</button>
+  <a href="/" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

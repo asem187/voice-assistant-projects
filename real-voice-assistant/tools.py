@@ -5,7 +5,6 @@ These are ACTUAL WORKING functions, not simulations.
 
 from database import db
 from datetime import datetime
-import json
 
 
 def save_memory(key: str, value: str) -> dict:
@@ -13,7 +12,11 @@ def save_memory(key: str, value: str) -> dict:
     success = db.save_memory(key, value)
     return {
         "success": success,
-        "message": f"Memory '{key}' saved successfully" if success else "Failed to save memory"
+        "message": (
+            f"Memory '{key}' saved successfully"
+            if success
+            else "Failed to save memory"
+        ),
     }
 
 
@@ -21,25 +24,14 @@ def get_memory(key: str) -> dict:
     """Retrieve information from memory."""
     value = db.get_memory(key)
     if value:
-        return {
-            "success": True,
-            "key": key,
-            "value": value
-        }
-    return {
-        "success": False,
-        "message": f"No memory found for key '{key}'"
-    }
+        return {"success": True, "key": key, "value": value}
+    return {"success": False, "message": f"No memory found for key '{key}'"}
 
 
 def list_memories() -> dict:
     """List all stored memories."""
     memories = db.list_memories()
-    return {
-        "success": True,
-        "count": len(memories),
-        "memories": memories
-    }
+    return {"success": True, "count": len(memories), "memories": memories}
 
 
 def create_task(title: str, description: str = "") -> dict:
@@ -49,22 +41,15 @@ def create_task(title: str, description: str = "") -> dict:
         return {
             "success": True,
             "task_id": task_id,
-            "message": f"Task created with ID {task_id}"
+            "message": f"Task created with ID {task_id}",
         }
-    return {
-        "success": False,
-        "message": "Failed to create task"
-    }
+    return {"success": False, "message": "Failed to create task"}
 
 
 def list_tasks(status: str = None) -> dict:
     """List all tasks or filter by status."""
     tasks = db.list_tasks(status)
-    return {
-        "success": True,
-        "count": len(tasks),
-        "tasks": tasks
-    }
+    return {"success": True, "count": len(tasks), "tasks": tasks}
 
 
 def complete_task(task_id: int) -> dict:
@@ -72,7 +57,11 @@ def complete_task(task_id: int) -> dict:
     success = db.update_task_status(task_id, "completed")
     return {
         "success": success,
-        "message": f"Task {task_id} marked as completed" if success else "Failed to update task"
+        "message": (
+            f"Task {task_id} marked as completed"
+            if success
+            else "Failed to update task"
+        ),
     }
 
 
@@ -84,7 +73,7 @@ def get_current_time() -> dict:
         "datetime": now.strftime("%Y-%m-%d %H:%M:%S"),
         "date": now.strftime("%Y-%m-%d"),
         "time": now.strftime("%H:%M:%S"),
-        "day": now.strftime("%A")
+        "day": now.strftime("%A"),
     }
 
 
@@ -100,16 +89,16 @@ TOOL_DEFINITIONS = [
                 "properties": {
                     "key": {
                         "type": "string",
-                        "description": "The key to store the memory under"
+                        "description": "The key to store the memory under",
                     },
                     "value": {
                         "type": "string",
-                        "description": "The information to remember"
-                    }
+                        "description": "The information to remember",
+                    },
                 },
-                "required": ["key", "value"]
-            }
-        }
+                "required": ["key", "value"],
+            },
+        },
     },
     {
         "type": "function",
@@ -121,23 +110,20 @@ TOOL_DEFINITIONS = [
                 "properties": {
                     "key": {
                         "type": "string",
-                        "description": "The key to retrieve"
+                        "description": "The key to retrieve",
                     }
                 },
-                "required": ["key"]
-            }
-        }
+                "required": ["key"],
+            },
+        },
     },
     {
         "type": "function",
         "function": {
             "name": "list_memories",
             "description": "List all stored memories",
-            "parameters": {
-                "type": "object",
-                "properties": {}
-            }
-        }
+            "parameters": {"type": "object", "properties": {}},
+        },
     },
     {
         "type": "function",
@@ -149,16 +135,16 @@ TOOL_DEFINITIONS = [
                 "properties": {
                     "title": {
                         "type": "string",
-                        "description": "The task title"
+                        "description": "The task title",
                     },
                     "description": {
                         "type": "string",
-                        "description": "Optional task description"
-                    }
+                        "description": "Optional task description",
+                    },
                 },
-                "required": ["title"]
-            }
-        }
+                "required": ["title"],
+            },
+        },
     },
     {
         "type": "function",
@@ -171,11 +157,11 @@ TOOL_DEFINITIONS = [
                     "status": {
                         "type": "string",
                         "description": "Filter by status: pending, completed",
-                        "enum": ["pending", "completed"]
+                        "enum": ["pending", "completed"],
                     }
-                }
-            }
-        }
+                },
+            },
+        },
     },
     {
         "type": "function",
@@ -187,24 +173,21 @@ TOOL_DEFINITIONS = [
                 "properties": {
                     "task_id": {
                         "type": "integer",
-                        "description": "The ID of the task to complete"
+                        "description": "The ID of the task to complete",
                     }
                 },
-                "required": ["task_id"]
-            }
-        }
+                "required": ["task_id"],
+            },
+        },
     },
     {
         "type": "function",
         "function": {
             "name": "get_current_time",
             "description": "Get the current date and time",
-            "parameters": {
-                "type": "object",
-                "properties": {}
-            }
-        }
-    }
+            "parameters": {"type": "object", "properties": {}},
+        },
+    },
 ]
 
 
@@ -216,7 +199,7 @@ FUNCTION_MAP = {
     "create_task": create_task,
     "list_tasks": list_tasks,
     "complete_task": complete_task,
-    "get_current_time": get_current_time
+    "get_current_time": get_current_time,
 }
 
 
@@ -228,9 +211,6 @@ def execute_function(function_name: str, arguments: dict) -> dict:
         except Exception as e:
             return {
                 "success": False,
-                "error": f"Function execution failed: {str(e)}"
+                "error": f"Function execution failed: {str(e)}",
             }
-    return {
-        "success": False,
-        "error": f"Unknown function: {function_name}"
-    }
+    return {"success": False, "error": f"Unknown function: {function_name}"}
